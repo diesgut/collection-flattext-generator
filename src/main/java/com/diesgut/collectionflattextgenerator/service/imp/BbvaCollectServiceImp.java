@@ -43,8 +43,7 @@ public class BbvaCollectServiceImp implements ICollectService {
 				.collect(Collectors.toList());
 
 		LocalDateTime now = LocalDateTime.now();
-		String sNow = now.format(DateTimeFormatter.BASIC_ISO_DATE);
-
+		String sDate = now.format(DateTimeFormatter.BASIC_ISO_DATE);
 		String sTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
 
 		LocalDateTime fechaVencimiento = LocalDateTime.now().plusDays(10L);
@@ -59,7 +58,7 @@ public class BbvaCollectServiceImp implements ICollectService {
 				}
 				BankReference bankReferenceFirst = banksReferencesByAccountNumber.get(0);
 
-				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() + sNow + "_" + accountNumber
+				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() +"_" + sDate+sTime + "_" + accountNumber
 						+ "_depositos.txt";
 				FileWriter writer = new FileWriter(csvFile);
 
@@ -69,7 +68,7 @@ public class BbvaCollectServiceImp implements ICollectService {
 				header.add(this.headBBVA(HeadBbvaEnum.RUC_EMPRESA, "666"));
 				header.add(this.headBBVA(HeadBbvaEnum.CODIGO_CLASE, "666"));
 				header.add(this.headBBVA(HeadBbvaEnum.TIPO_MONEDA, bankReferenceFirst.getCurrencyEnum().getCodeBBVA()));
-				header.add(this.headBBVA(HeadBbvaEnum.FECHA_PROCESO, sNow)); // "20201025"
+				header.add(this.headBBVA(HeadBbvaEnum.FECHA_PROCESO, sDate)); // "20201025"
 				header.add(this.headBBVA(HeadBbvaEnum.CUENTA_RECAUDA, accountNumber));
 				header.add(this.headBBVA(HeadBbvaEnum.VACIO, "1"));
 				records.add(header);
@@ -94,7 +93,7 @@ public class BbvaCollectServiceImp implements ICollectService {
 					details.add(this.detailBBVA(DetailBbvaEnum.IMPORTE_MORA, "0"));
 					details.add(this.detailBBVA(DetailBbvaEnum.OFICINA_PAGO, "666"));
 					details.add(this.detailBBVA(DetailBbvaEnum.NRO_MOVIMIENTO, sOperationNumber));
-					details.add(this.detailBBVA(DetailBbvaEnum.FECHA_PAGO, sNow)); // 20201025"
+					details.add(this.detailBBVA(DetailBbvaEnum.FECHA_PAGO, sDate)); // 20201025"
 					details.add(this.detailBBVA(DetailBbvaEnum.TIPO_VALOR, "01"));
 					details.add(this.detailBBVA(DetailBbvaEnum.CANAL_ENTRADA, "01"));
 					details.add(this.detailBBVA(DetailBbvaEnum.VACIO, ""));

@@ -43,11 +43,11 @@ public class ScoCollectServiceImp implements ICollectService {
 				.collect(Collectors.toList());
 
 		LocalDateTime now = LocalDateTime.now();
-		String sNow = now.format(DateTimeFormatter.BASIC_ISO_DATE);
+		String sDate = now.format(DateTimeFormatter.BASIC_ISO_DATE);
+		String sTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
 
 		LocalDateTime fechaVencimiento = LocalDateTime.now().plusDays(10L);
 		String sFechaVencimiento = fechaVencimiento.format(DateTimeFormatter.BASIC_ISO_DATE);
-		String sTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
 
 		for (String accountNumber : accountsNumbers) {
 			try {
@@ -58,7 +58,7 @@ public class ScoCollectServiceImp implements ICollectService {
 				}
 				BankReference bankReferenceFirst = banksReferencesByAccountNumber.get(0);
 
-				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() + sNow + "_" + accountNumber
+				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() +"_" + sDate+sTime + "_" + accountNumber
 						+ "_depositos.txt";
 				FileWriter writer = new FileWriter(csvFile);
 
@@ -70,7 +70,7 @@ public class ScoCollectServiceImp implements ICollectService {
 				header.add(this.headSCO(HeadScoEnum.DOCUMENTOS, "666"));
 				header.add(this.headSCO(HeadScoEnum.TOTAL_SOLES, "666"));
 				header.add(this.headSCO(HeadScoEnum.TOTAL_DOLARES, "666"));
-				header.add(this.headSCO(HeadScoEnum.FECHA_MOVIMIENTO, sNow)); // "20201025"
+				header.add(this.headSCO(HeadScoEnum.FECHA_MOVIMIENTO, sDate)); // "20201025"
 				header.add(this.headSCO(HeadScoEnum.FILLER, ""));
 				header.add(this.headSCO(HeadScoEnum.FIN_REGISTRO, "*"));
 				records.add(header);
@@ -101,13 +101,13 @@ public class ScoCollectServiceImp implements ICollectService {
 					details.add(this.detailSCO(DetailScoEnum.IMPORTE5, "0"));
 					details.add(this.detailSCO(DetailScoEnum.IMPORTE_MORA_6, "0"));
 					details.add(this.detailSCO(DetailScoEnum.FECHA_VENCIMIENTO, sFechaVencimiento)); // "20201025"
-					details.add(this.detailSCO(DetailScoEnum.FECHA_PAGO, sNow)); // "20201025"
+					details.add(this.detailSCO(DetailScoEnum.FECHA_PAGO, sDate)); // "20201025"
 					details.add(this.detailSCO(DetailScoEnum.TIPO_PAGO, "1"));
 					details.add(this.detailSCO(DetailScoEnum.MEDIO_PAGO, "1"));
 					details.add(this.detailSCO(DetailScoEnum.NRO_OPERACION, sOperationNumber));
 					details.add(this.detailSCO(DetailScoEnum.REFERENCIA_COBRO, "XXXXXXXXX"));
 					details.add(this.detailSCO(DetailScoEnum.HORA_PAGO, sTime));// "050144"
-					details.add(this.detailSCO(DetailScoEnum.FECHA_PAGO_REAL, sNow)); // "20201025"
+					details.add(this.detailSCO(DetailScoEnum.FECHA_PAGO_REAL, sDate)); // "20201025"
 					details.add(this.detailSCO(DetailScoEnum.CANAL, "01"));
 					details.add(this.detailSCO(DetailScoEnum.FIN_REGISTRO, "*"));
 					records.add(details);

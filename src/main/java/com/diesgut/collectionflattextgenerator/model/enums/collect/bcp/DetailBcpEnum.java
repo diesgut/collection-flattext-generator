@@ -2,7 +2,7 @@ package com.diesgut.collectionflattextgenerator.model.enums.collect.bcp;
 
 public enum DetailBcpEnum {
 	
-	TIPO_REGISTRO(1,""),
+	TIPO_REGISTRO(2,""),
 	CODIGO_CUENTA(3,""),
 	CODIGO_MONEDA(1,""), 
 	NRO_CTA_EMP_AFI(7,""),

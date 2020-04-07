@@ -45,12 +45,12 @@ public class BcpCollectServiceImp implements ICollectService {
 				.collect(Collectors.toList());
 
 		LocalDateTime now = LocalDateTime.now();
-		String sNow = now.format(DateTimeFormatter.BASIC_ISO_DATE);
+		String sDate = now.format(DateTimeFormatter.BASIC_ISO_DATE);
+		String sTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
 
 		LocalDateTime fechaVencimiento = LocalDateTime.now().plusDays(10L);
 		String sFechaVencimiento = fechaVencimiento.format(DateTimeFormatter.BASIC_ISO_DATE);
 
-		String sTime = now.format(DateTimeFormatter.ofPattern("HHmmss"));
 
 		for (String accountNumber : accountsNumbers) {
 			try {
@@ -61,7 +61,7 @@ public class BcpCollectServiceImp implements ICollectService {
 				}
 				BankReference bankReferenceFirst = banksReferencesByAccountNumber.get(0);
 
-				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() + sNow + "_" + accountNumber
+				String csvFile = StartApplication.FOLDER_DEPOSIT + bankEnum.name() +"_" + sDate+sTime + "_" + accountNumber
 						+ "_depositos.txt";
 				FileWriter writer = new FileWriter(csvFile);
 
@@ -72,7 +72,7 @@ public class BcpCollectServiceImp implements ICollectService {
 				header.add(this.headBCP(HeadBcpEnum.CODIGO_MONEDA, bankReferenceFirst.getCurrencyEnum().getCodeBCP()));
 				header.add(this.headBCP(HeadBcpEnum.NRO_CTA_EMP_AFI, accountNumber));
 				header.add(this.headBCP(HeadBcpEnum.TIPO_VALIDACION, "C")); // COMPLETA
-				header.add(this.headBCP(HeadBcpEnum.FECHA_PROCESO, sNow));
+				header.add(this.headBCP(HeadBcpEnum.FECHA_PROCESO, sDate));
 				header.add(this.headBCP(HeadBcpEnum.CANTIDAD_TOTAL_REGISTROS, "666"));
 				header.add(this.headBCP(HeadBcpEnum.MONTO_TOTAL, "10000"));
 				header.add(this.headBCP(HeadBcpEnum.CODIGO_INTERNO_CTA_RECAUDA, "666"));
@@ -100,7 +100,7 @@ public class BcpCollectServiceImp implements ICollectService {
 					details.add(this.detailBCP(DetailBcpEnum.NRO_CTA_EMP_AFI, accountNumber));
 					details.add(this.detailBCP(DetailBcpEnum.CODIGO_ID_DEPOSITANTE, bankReference.getBankReference()));
 					details.add(this.detailBCP(DetailBcpEnum.ADITIONAL_DATA_DEPOSITANTE, ""));
-					details.add(this.detailBCP(DetailBcpEnum.PAYMENT_DATE, sNow));
+					details.add(this.detailBCP(DetailBcpEnum.PAYMENT_DATE, sDate));
 					details.add(this.detailBCP(DetailBcpEnum.FECHA_VENCIMIENTO, sFechaVencimiento));
 					details.add(this.detailBCP(DetailBcpEnum.MONTO_PAGADO, sOperationAmount));
 					details.add(this.detailBCP(DetailBcpEnum.MONTO_MORA, "0"));
@@ -116,7 +116,7 @@ public class BcpCollectServiceImp implements ICollectService {
 					details.add(this.detailBCP(DetailBcpEnum.CARGO_FIJO_PAGADO, ""));
 					details.add(this.detailBCP(DetailBcpEnum.ES_EXTORNADO, ""));
 					details.add(this.detailBCP(DetailBcpEnum.NRO_DOCUMENTO_PAGO, bankReference.getBankReference()));
-					details.add(this.detailBCP(DetailBcpEnum.NRO_OPERACION_BD, "666"));
+					details.add(this.detailBCP(DetailBcpEnum.NRO_OPERACION_BD,sOperationNumber));
 					details.add(this.detailBCP(DetailBcpEnum.CAMPO_LIBRE, ""));
 					records.add(details);
 				}

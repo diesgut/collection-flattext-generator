@@ -7,7 +7,7 @@ public enum HeadBbvaEnum  {
 	CODIGO_CLASE(3,"0"),
 	TIPO_MONEDA(3,""),
 	FECHA_PROCESO(8,"0"),
-	CUENTA_RECAUDA(18,"0"),
+	CUENTA_RECAUDA(18,""),
 	VACIO(107,""); //documen says 105
 	
 	private Integer dataLength;
