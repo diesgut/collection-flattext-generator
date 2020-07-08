@@ -52,8 +52,16 @@ public class StartApplication implements CommandLineRunner {
 		log.info("runMetod...");
 		boolean success = new File(FOLDER_DEPOSIT).mkdirs();
 		bvaCollectService.collectFileGenerator();
-		scoCollectService.collectFileGenerator();
-		bcpCollectService.collectFileGenerator();
+//		scoCollectService.collectFileGenerator();
+//		bcpCollectService.collectFileGenerator();
+		
+//		String cadenaSco="0200F220848188E0800000000000000000181600000000000000003550000000000000000622144\n" + 
+//				"4395383430622000901006 1006 0056 000000000000000AGENCIA CENTRO\n" + 
+//				"HISTORICO 6040023013802000000 000000 REC 0000010 013838822\n" + 
+//				"000 01000000";
+		
+		String cadenaSco="0200F220848188E0800000000000000000181600000000000000003550000000000000000622144 4395383430622000901006 1006 0056 000000000000000AGENCIA CENTRO HISTORICO 6040023013802000000 000000 REC 0000010 013838822 000 01000000";
+		
 	}
 
 }
